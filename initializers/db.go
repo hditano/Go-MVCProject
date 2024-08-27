@@ -1,32 +1,32 @@
 package initializers
 
 import (
-	"database/sql"
+	"hditano/MVCProject/models"
 	"log"
 	"os"
 
 	_ "github.com/mattn/go-sqlite3"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 )
 
-const create_database = `CREATE TABLE IF NOT EXISTS customers (
-id INTEGER PRIMARY KEY AUTOINCREMENT,
-firstname TEXT NOT NULL,
-lastname TEXT NOT NULL,
-address TEXT NOT NULL,
-email TEXT NOT NULL
-);`
+// Initialize gorm
+var DB *gorm.DB
 
 func ConnectToDatabase() {
 	os.Remove("./database.db")
-	db, err := sql.Open("sqlite3", "./database.db")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close()
+	var err error
+	DB, err = gorm.Open(sqlite.Open("database.db"), &gorm.Config{})
+	checkErrors(err)
 
-	_, err = db.Exec(create_database)
-	if err != nil {
-		log.Fatal(err)
-	}
+}
 
+func checkErrors(e error) {
+	if e != nil {
+		log.Fatal(e)
+	}
+}
+
+func SyncDB() {
+	DB.AutoMigrate(&models.Customer{})
 }
