@@ -1,6 +1,7 @@
 package initializers
 
 import (
+	"fmt"
 	"hditano/MVCProject/models"
 	"log"
 	"os"
@@ -29,4 +30,10 @@ func checkErrors(e error) {
 
 func SyncDB() {
 	DB.AutoMigrate(&models.Customer{})
+}
+
+func AddData() {
+	user := models.Customer{FirstName: "Hernan", LastName: "Di Tano", Address: "Imbramowska 3", Email: "hditano@gmail.com"}
+	DB.Create(&user)
+	fmt.Print(user)
 }
