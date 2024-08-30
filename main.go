@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"hditano/MVCProject/initializers"
 )
 
@@ -12,5 +11,12 @@ func init() {
 }
 
 func main() {
-	fmt.Println("Hello")
+	//http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	//	fmt.Fprint(w, "Hello World")
+	//})
+
+	// fmt.Print("\nStarting Server...\n")
+	// http.ListenAndServe(":8080", nil)
+
+	initializers.GetRecord()
 }

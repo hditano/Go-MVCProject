@@ -19,7 +19,6 @@ func ConnectToDatabase() {
 	var err error
 	DB, err = gorm.Open(sqlite.Open("database.db"), &gorm.Config{})
 	checkErrors(err)
-
 }
 
 func checkErrors(e error) {
@@ -35,5 +34,10 @@ func SyncDB() {
 func AddData() {
 	user := models.Customer{FirstName: "Hernan", LastName: "Di Tano", Address: "Imbramowska 3", Email: "hditano@gmail.com"}
 	DB.Create(&user)
-	fmt.Print(user)
+}
+
+func GetRecord() {
+	var customer models.Customer
+	DB.First(&customer, "first_name = ?", "Hernan")
+	fmt.Print(customer)
 }
